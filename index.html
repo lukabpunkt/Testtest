@@ -1469,7 +1469,7 @@
             <p>&copy; 2026 Die Meisterreinigung Wietmarschen. Alle Rechte vorbehalten.</p>
             <p style="margin-top: 0.5rem;">
                 <a href="impressum.html" id="impressumLink" style="color: inherit; margin: 0 1rem;">Impressum</a>
-                <a href="#" style="color: inherit; margin: 0 1rem;">Datenschutz</a>
+                <a href="datenschutz.html" id="datenschutzLink" style="color: inherit; margin: 0 1rem;">Datenschutz</a>
             </p>
         </div>
     </footer>
@@ -1569,22 +1569,20 @@
         // Update every minute
         setInterval(updateStatus, 60000);
 
-        // Impressum Link zu GitHub Repository
+        // Impressum & Datenschutz Links (lokal + GitHub Pages)
         const impressumLink = document.getElementById('impressumLink');
-        
+        const datenschutzLink = document.getElementById('datenschutzLink');
+
+        const isGitHubPages = window.location.hostname.includes('github.io');
+        const currentPath = window.location.pathname;
+        const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+
         if (impressumLink) {
-            // Prüfe, ob die Seite auf GitHub Pages läuft
-            const isGitHubPages = window.location.hostname.includes('github.io');
-            
-            if (isGitHubPages) {
-                // Auf GitHub Pages: Verwende die aktuelle Domain + impressum.html
-                const currentPath = window.location.pathname;
-                const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
-                impressumLink.href = basePath + '/impressum.html';
-            } else {
-                // Lokal oder andere Domains: Relativer Pfad
-                impressumLink.href = 'impressum.html';
-            }
+            impressumLink.href = isGitHubPages ? basePath + '/impressum.html' : 'impressum.html';
+        }
+
+        if (datenschutzLink) {
+            datenschutzLink.href = isGitHubPages ? basePath + '/datenschutz.html' : 'datenschutz.html';
         }
     </script>
 </body>
