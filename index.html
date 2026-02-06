@@ -107,6 +107,21 @@
             object-position: center;
         }
 
+        .logo-image-pc {
+            display: block;
+        }
+        .logo-image-mobile {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .logo-image-pc {
+                display: none;
+            }
+            .logo-image-mobile {
+                display: block;
+            }
+        }
+
         .header-contact {
             display: flex;
             align-items: center;
@@ -1179,7 +1194,8 @@
         <div class="header-container">
             <div class="logo-container">
                 <a href="#" class="logo-link" aria-label="Nach oben scrollen">
-                    <img src="Waschmaschinenlogo.PNG" alt="Die Meisterreinigung Logo" class="logo-image">
+                    <img src="waschmaschinenlogopc.png" alt="Die Meisterreinigung Logo" class="logo-image logo-image-pc">
+                    <img src="waschmaschinenlog.png" alt="Die Meisterreinigung Logo" class="logo-image logo-image-mobile">
                 </a>
             </div>
             <div class="header-contact">
