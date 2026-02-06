@@ -286,14 +286,33 @@
         }
 
         .btn-primary {
-            background: var(--accent-gold);
+            background: linear-gradient(145deg, #f0d04a 0%, var(--accent-gold) 35%, #c9a227 100%);
             color: var(--primary-blue);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+            border-radius: 50px 50px 0 0;
+            pointer-events: none;
         }
 
         .btn-primary:hover {
-            background: #e5c047;
+            background: linear-gradient(145deg, #f5d755 0%, #e5c047 35%, #d4af37 100%);
             transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.5);
+        }
+
+        .btn-primary:hover::before {
+            background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
         }
 
         .btn-secondary {
@@ -305,6 +324,36 @@
         .btn-secondary:hover {
             background: rgba(255,255,255,0.25);
             border-color: rgba(255,255,255,0.5);
+        }
+
+        .btn-gloss-blue {
+            background: linear-gradient(145deg, #2d5f8d 0%, var(--primary-blue) 40%, #172d47 100%) !important;
+            color: var(--white) !important;
+            border: none !important;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.25);
+        }
+
+        .btn-gloss-blue::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+            border-radius: 50px 50px 0 0;
+            pointer-events: none;
+        }
+
+        .btn-gloss-blue:hover {
+            background: linear-gradient(145deg, #356a9e 0%, #2d5f8d 40%, var(--primary-blue) 100%) !important;
+            box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.35);
+        }
+
+        .btn-gloss-blue:hover::before {
+            background: linear-gradient(180deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
         }
 
         /* Trust Bar */
@@ -1452,7 +1501,7 @@
                     <span>📞</span>
                     <span>Jetzt anrufen: 01573 8757595</span>
                 </a>
-                <a href="https://maps.google.com/?q=Poststraße+2a+49835+Wietmarschen" target="_blank" class="btn btn-secondary" style="background: var(--primary-blue); color: white; border: none;">
+                <a href="https://maps.google.com/?q=Poststraße+2a+49835+Wietmarschen" target="_blank" class="btn btn-secondary btn-gloss-blue">
                     <span>🗺️</span>
                     <span>Route planen</span>
                 </a>
