@@ -88,9 +88,15 @@
 
         .logo-link {
             display: inline-flex;
+            align-items: center;
             text-decoration: none;
             cursor: pointer;
-            -webkit-tap-highlight-color: rgba(30, 58, 95, 0.1);
+            min-height: 44px;
+            min-width: 44px;
+            -webkit-tap-highlight-color: rgba(30, 58, 95, 0.15);
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .logo-image {
@@ -1503,11 +1509,28 @@
             }
         }
 
-        // Logo-Klick: Nach oben scrollen
-        document.querySelector('.logo-link')?.addEventListener('click', function (e) {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        // Logo-Klick / Touch: Nach oben scrollen (funktioniert auf Maus und Touchscreen)
+        (function () {
+            const logoLink = document.querySelector('.logo-link');
+            if (!logoLink) return;
+            function scrollToTop(e) {
+                if (e) e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            let touchHandled = false;
+            logoLink.addEventListener('touchend', function (e) {
+                touchHandled = true;
+                scrollToTop(e);
+                setTimeout(function () { touchHandled = false; }, 400);
+            }, { passive: false });
+            logoLink.addEventListener('click', function (e) {
+                if (touchHandled) {
+                    e.preventDefault();
+                    return;
+                }
+                scrollToTop(e);
+            });
+        })();
 
         // Smooth Scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
