@@ -726,7 +726,7 @@
         .faq-question::after {
             content: '+';
             font-size: 1.5rem;
-            transition: transform 0.3s ease;
+            transition: transform 0.35s ease;
         }
 
         .faq-item.active .faq-question::after {
@@ -734,9 +734,21 @@
         }
 
         .faq-answer {
-            padding: 0 1.25rem 1rem 1.25rem;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 1.25rem;
             color: var(--text-light);
             line-height: 1.7;
+            transition: max-height 0.4s ease, opacity 0.35s ease, padding 0.35s ease, transform 0.35s ease;
+            transform: translateY(-8px);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 20rem;
+            opacity: 1;
+            padding: 0 1.25rem 1rem 1.25rem;
+            transform: translateY(0);
         }
 
         /* CTA Section */
@@ -1448,7 +1460,7 @@
                 <div class="faq-question" onclick="toggleFAQ(this)">
                     Bieten Sie einen Abholservice an?
                 </div>
-                <div class="faq-answer" style="display: none;">
+                <div class="faq-answer">
                     Ja! Besonders für Pferdedecken bieten wir einen bequemen Hol- und Bringservice direkt zu Ihrem Stall an. Kontaktieren Sie uns für weitere Details.
                 </div>
             </div>
@@ -1457,7 +1469,7 @@
                 <div class="faq-question" onclick="toggleFAQ(this)">
                     Wie lange dauert eine Reinigung?
                 </div>
-                <div class="faq-answer" style="display: none;">
+                <div class="faq-answer">
                     Die Bearbeitungszeit hängt vom jeweiligen Service ab. In der Regel beträgt die Dauer 3-5 Werktage. Bei Expressservice sprechen Sie uns bitte direkt an.
                 </div>
             </div>
@@ -1466,7 +1478,7 @@
                 <div class="faq-question" onclick="toggleFAQ(this)">
                     Reinigen Sie auch Brautkleider?
                 </div>
-                <div class="faq-answer" style="display: none;">
+                <div class="faq-answer">
                     Ja, wir sind auf die Reinigung empfindlicher Textilien wie Brautkleider, Abendgarderobe und Anzüge spezialisiert. Ihre wertvollen Stücke sind bei uns in besten Händen.
                 </div>
             </div>
@@ -1475,7 +1487,7 @@
                 <div class="faq-question" onclick="toggleFAQ(this)">
                     Kann ich auch nur die Heißmangel nutzen?
                 </div>
-                <div class="faq-answer" style="display: none;">
+                <div class="faq-answer">
                     Selbstverständlich! Wir bieten alle unsere Services auch einzeln an. Sie können gezielt nur den Heißmangel-Service für Ihre Tischdecken oder Bettwäsche nutzen.
                 </div>
             </div>
@@ -1484,7 +1496,7 @@
                 <div class="faq-question" onclick="toggleFAQ(this)">
                     Wo kann ich parken?
                 </div>
-                <div class="faq-answer" style="display: none;">
+                <div class="faq-answer">
                     Parkplätze stehen direkt vor Ort zur Verfügung. Sie können bequem vorfahren und Ihre Textilien abgeben.
                 </div>
             </div>
@@ -1551,23 +1563,13 @@
     </footer>
 
     <script>
-        // FAQ Toggle Function
+        // FAQ Toggle Function (Animation über CSS)
         function toggleFAQ(element) {
             const faqItem = element.parentElement;
-            const answer = faqItem.querySelector('.faq-answer');
             const isActive = faqItem.classList.contains('active');
 
-            // Close all FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-                item.querySelector('.faq-answer').style.display = 'none';
-            });
-
-            // Open clicked item if it wasn't active
-            if (!isActive) {
-                faqItem.classList.add('active');
-                answer.style.display = 'block';
-            }
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+            if (!isActive) faqItem.classList.add('active');
         }
 
         // Logo-Klick / Touch: Nach oben scrollen (funktioniert auf Maus und Touchscreen)
