@@ -419,6 +419,18 @@
             border-color: var(--accent-teal);
         }
 
+        /* Mobile: Kachel hervorheben, wenn sie mittig beim Scrollen ist */
+        @media (max-width: 768px) {
+            .service-card--centered {
+                transform: translateY(-6px) scale(1.02);
+                box-shadow: var(--shadow-lg);
+                border-color: var(--accent-teal);
+            }
+            .service-card--centered::before {
+                transform: scaleX(1);
+            }
+        }
+
         .service-icon {
             font-size: 3rem;
             margin-bottom: 1.5rem;
@@ -1530,6 +1542,58 @@
                 }
                 scrollToTop(e);
             });
+        })();
+
+        // Mobile: Service-Kacheln beim Scrollen hervorheben, wenn sie mittig sind
+        (function () {
+            const MOBILE_BREAKPOINT = 768;
+            const cards = document.querySelectorAll('.service-card');
+            let ticking = false;
+            let lastCentered = null;
+
+            function getViewportCenterY() {
+                return window.innerHeight / 2;
+            }
+
+            function updateCenteredCard() {
+                if (window.innerWidth > MOBILE_BREAKPOINT) {
+                    cards.forEach(function (card) { card.classList.remove('service-card--centered'); });
+                    lastCentered = null;
+                    return;
+                }
+                const centerY = getViewportCenterY();
+                let best = null;
+                let bestDist = Infinity;
+                cards.forEach(function (card) {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenterY = rect.top + rect.height / 2;
+                    const dist = Math.abs(cardCenterY - centerY);
+                    if (rect.top < window.innerHeight && rect.bottom > 0 && dist < bestDist) {
+                        bestDist = dist;
+                        best = card;
+                    }
+                });
+                if (best !== lastCentered) {
+                    cards.forEach(function (card) { card.classList.remove('service-card--centered'); });
+                    if (best) best.classList.add('service-card--centered');
+                    lastCentered = best;
+                }
+                ticking = false;
+            }
+
+            function onScroll() {
+                if (!ticking) {
+                    requestAnimationFrame(updateCenteredCard);
+                    ticking = true;
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', function () {
+                onScroll();
+                if (window.innerWidth > MOBILE_BREAKPOINT) updateCenteredCard();
+            });
+            updateCenteredCard();
         })();
 
         // Smooth Scrolling for anchor links
