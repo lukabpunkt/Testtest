@@ -1205,7 +1205,7 @@
                 </a>
                 <span class="status-badge status-closed">
                     <span class="status-dot"></span>
-                    Öffnet Do um 09:00
+                    Öffnet Mo um 09:00
                 </span>
             </div>
         </div>
@@ -1434,27 +1434,27 @@
             <div class="hours-table">
                 <div class="hours-row">
                     <div class="hours-day">Montag</div>
-                    <div class="hours-time">Geschlossen</div>
+                    <div class="hours-time">09:00 – 13:00</div>
                 </div>
                 <div class="hours-row">
                     <div class="hours-day">Dienstag</div>
-                    <div class="hours-time">09:00 - 12:30, 15:00 - 18:00</div>
+                    <div class="hours-time">09:00 – 13:00</div>
                 </div>
                 <div class="hours-row">
                     <div class="hours-day">Mittwoch</div>
-                    <div class="hours-time">09:00 - 12:30</div>
+                    <div class="hours-time">Geschlossen</div>
                 </div>
                 <div class="hours-row">
                     <div class="hours-day">Donnerstag</div>
-                    <div class="hours-time">09:00 - 12:30, 15:00 - 18:00</div>
+                    <div class="hours-time">09:00 – 13:00</div>
                 </div>
                 <div class="hours-row">
                     <div class="hours-day">Freitag</div>
-                    <div class="hours-time">09:00 - 12:30, 15:00 - 18:00</div>
+                    <div class="hours-time">09:00 – 12:00</div>
                 </div>
                 <div class="hours-row">
                     <div class="hours-day">Samstag</div>
-                    <div class="hours-time">09:00 - 12:00</div>
+                    <div class="hours-time">Geschlossen</div>
                 </div>
                 <div class="hours-row">
                     <div class="hours-day">Sonntag</div>
@@ -1554,10 +1554,9 @@
 
             <div class="footer-section">
                 <h3>Öffnungszeiten</h3>
-                <p>Di, Do, Fr: 09:00 - 12:30, 15:00 - 18:00</p>
-                <p>Mi: 09:00 - 12:30</p>
-                <p>Sa: 09:00 - 12:00</p>
-                <p>So, Mo: Geschlossen</p>
+                <p>Mo, Di, Do: 09:00 – 13:00</p>
+                <p>Fr: 09:00 – 12:00</p>
+                <p>Mi, Sa, So: Geschlossen</p>
             </div>
 
             <div class="footer-section">
@@ -1693,12 +1692,12 @@
             // Opening hours definition
             const hours = {
                 0: null, // Sunday - closed
-                1: null, // Monday - closed
-                2: [[540, 750], [900, 1080]], // Tuesday 9:00-12:30, 15:00-18:00
-                3: [[540, 750]], // Wednesday 9:00-12:30
-                4: [[540, 750], [900, 1080]], // Thursday
-                5: [[540, 750], [900, 1080]], // Friday
-                6: [[540, 720]], // Saturday 9:00-12:00
+                1: [[540, 780]], // Monday 09:00-13:00
+                2: [[540, 780]], // Tuesday 09:00-13:00
+                3: null, // Wednesday - closed
+                4: [[540, 780]], // Thursday 09:00-13:00
+                5: [[540, 720]], // Friday 09:00-12:00
+                6: null, // Saturday - closed
             };
 
             if (hours[day]) {
@@ -1717,20 +1716,26 @@
             } else {
                 statusBadge.className = 'status-badge status-closed';
                 // Find next opening
-                if (day === 0 || day === 1) {
+                if (day === 0 || day === 6) {
+                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Mo um 09:00';
+                } else if (day === 1 && currentTime >= 780) {
                     statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Di um 09:00';
-                } else if (day === 2 && currentTime >= 1080) {
-                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Mi um 09:00';
-                } else if (day === 3 && currentTime >= 750) {
+                } else if (day === 1) {
+                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Mo um 09:00';
+                } else if (day === 2 && currentTime >= 780) {
                     statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Do um 09:00';
-                } else if (day === 4 && currentTime >= 1080) {
-                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Fr um 09:00';
-                } else if (day === 5 && currentTime >= 1080) {
-                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Sa um 09:00';
-                } else if (day === 6 && currentTime >= 720) {
+                } else if (day === 2) {
                     statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Di um 09:00';
+                } else if (day === 3) {
+                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Do um 09:00';
+                } else if (day === 4 && currentTime >= 780) {
+                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Fr um 09:00';
+                } else if (day === 4) {
+                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Do um 09:00';
+                } else if (day === 5 && currentTime >= 720) {
+                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Mo um 09:00';
                 } else {
-                    statusBadge.innerHTML = '<span class="status-dot"></span> Geschlossen';
+                    statusBadge.innerHTML = '<span class="status-dot"></span> Öffnet Fr um 09:00';
                 }
             }
         }
